@@ -1,0 +1,49 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: EventSource
+metadata:
+  name: github
+spec:
+  service:
+    ports:
+      - port: 13000
+        targetPort: 13000
+  github:
+    github-app:
+      owner: Workquark
+      repository: argocd-dotnet-kafka-subscriber-deploy
+      webhook:
+        endpoint: /argocd-kafka-subscriber
+        port: "13000"
+        method: POST
+        url: http://joydeep.tk
+      events:
+        - "*"
+      apiToken:
+        name: github-access
+        key: token
+      insecure: true
+      active: true
+      contentType: json
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: github
+  annotations:
+    # kubernetes.io/ingress.class: "nginx"
+    ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  ingressClassName: nginx
+  rules:
+    - http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: github-eventsource-svc
+                port:
+                  number: 13000
+      host: joydeep.tk

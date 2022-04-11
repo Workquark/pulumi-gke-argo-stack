@@ -1,0 +1,94 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: argocd-dotnet-kafka-subscriber-ci-
+spec:
+  entrypoint: argocd-dotnet-kafka-subscriber-ci
+  arguments:
+    parameters:
+      - name: repo
+        value: https://github.com/Workquark/argocd-dotnet-kafka-subscriber.git
+      - name: revision
+        value: "master"
+
+  templates:
+    - name: argocd-dotnet-kafka-subscriber-ci
+      steps:
+        - - name: checkout
+            template: checkout
+        - - name: build
+            template: build
+            arguments:
+              parameters:
+                - name: path
+                  value: "/Kafka-Subscriber" #"{{workflow.parameters.path}}"
+              artifacts:
+                - name: source
+                  from: "{{steps.checkout.outputs.artifacts.source}}"
+    - name: checkout
+      inputs:
+        artifacts:
+          - name: source
+            path: /src
+            git:
+              repo: "{{workflow.parameters.repo}}"
+              revision: "{{workflow.parameters.revision}}"
+      outputs:
+        artifacts:
+          - name: source
+            path: /src/Kafka-Subscriber
+      container:
+        image: alpine/git
+        # command: ["/bin/sh", "-c"]
+        command:
+          - /bin/sh
+          - -c
+          - |
+            ls -al /src
+            cd /src
+            git status
+
+    # - name: build
+    #   inputs:
+    #     artifacts:
+    #       - name: source
+    #         path: /src/Kafka-Subscriber
+    #   container:
+    #     workingDir: /src/Kafka-Subscriber
+    #     image: docker
+    #     args: [
+    #         "
+    #         until docker ps; do sleep 3; done &&
+    #         echo {{inputs.parameters}}
+    #         ",
+    #       ]
+    #     command:
+    #       - sh
+    #       - -c
+    #       # - docker build -t joydeep1985/argocd-dotnet-kafka-subscriber .
+    #     env:
+    #       - name: DOCKER_HOST
+    #         value: 127.0.0.1
+    #   sidecars:
+    #     - name: dind
+    #       image: docker:20.10.14-dind
+    #       securityContext:
+    #         privileged: true
+    #       mirrorVolumeMounts: true
+    - name: build
+      inputs:
+        artifacts:
+          - name: source
+            path: /src/Kafka-Subscriber
+      container:
+        workingDir: /src/Kafka-Subscriber
+        image: gcr.io/kaniko-project/executor:debug
+        command: [/kaniko/executor]
+        args:
+          # - --context={{inputs.parameters.repo_url}}#{{inputs.parameters.repo_ref}}#{{inputs.parameters.repo_commit_id}}
+          # - --destination={{inputs.parameters.container_image}}:{{inputs.parameters.container_tag}}
+          - --context={{inputs.parameters.repo_url}}#{{inputs.parameters.repo_ref}}#{{inputs.parameters.repo_commit_id}}
+          - --destination={{inputs.parameters.container_image}}:{{inputs.parameters.container_tag}}
+        volumeMounts:
+          - name: regcred
+            mountPath: /kaniko/.docker/

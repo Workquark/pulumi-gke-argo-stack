@@ -1,0 +1,39 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Sensor
+metadata:
+  name: github-webhook
+spec:
+  template:
+    serviceAccountName: argo-events-sa
+  dependencies:
+    - name: github-trigger
+      eventSourceName: github
+      eventName: github-app
+  triggers:
+    - template:
+        name: github-app-trigger
+        k8s:
+          group: ""
+          version: v1
+          resource: pods
+          operation: create
+          source:
+            resource:
+              apiVersion: v1
+              kind: Pod
+              metadata:
+                generateName: github-trigger-
+                labels:
+                  app: github-webhook-trigger
+              spec:
+                containers:
+                  - name: hello
+                    image: alpine
+                    command: ["echo"]
+                    args: ["This is the message you sent me:\n", ""]
+                restartPolicy: Never
+          parameters:
+            - src:
+                dependencyName: github-trigger
+                dataKey: body.commits.0.message
+              dest: spec.containers.0.args.1

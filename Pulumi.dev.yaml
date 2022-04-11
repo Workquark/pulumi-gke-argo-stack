@@ -1,0 +1,4 @@
+encryptionsalt: v1:xgr5SlUN0b4=:v1:GnDyugCC4jKXo0BY:ViZMJNl3BDj8AwHrciL4Iqj8EqT/Pg==
+config:
+  gcp:project: poc-argocd
+  gcp:zone: us-central1-a
