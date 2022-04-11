@@ -14,8 +14,8 @@
 
 ## Create secret pat token
 
-    # This secret is for accessing the github repo
-    kubectl create secret generic github-access --from-literal=token=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 
+    # This secret is for accessing the github repo ( TODO: migrate it to sealed secret )
+    kubectl create secret generic github-access --from-literal=token=<github PAT token> 
 
 ## Create kaniko secret
 
