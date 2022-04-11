@@ -1,3 +1,5 @@
+# Argo stack configuration
+
 ## Create the namesapce
 
     kubectl create namespace argo-events
