@@ -1,0 +1,22 @@
+{
+  "kind": "SealedSecret",
+  "apiVersion": "bitnami.com/v1alpha1",
+  "metadata": {
+    "name": "github-access",
+    "namespace": "argo-events",
+    "creationTimestamp": null
+  },
+  "spec": {
+    "template": {
+      "metadata": {
+        "name": "github-access",
+        "namespace": "argo-events",
+        "creationTimestamp": null
+      },
+      "data": null
+    },
+    "encryptedData": {
+      "token": "AgAntNYJih7m8zJv/fkajEjRysxitnohVM9x913Vf/HU7sCcFQOC89u+fJguKjLkdozvY0QLzAozoRSknZSMOvc5MSginbVQ4vm6csljClX50yp7PawajcOjoyRpX1Ie0z3R8Tt7SuJjEQkJt3aVYLjsue7nkesHrkO1mAkwDlYEToKa+Txx3FL0YNH8S5w1RhW3sJ7BBe4/xWYwVAMRL9INwdrXX3SG/ASwNA9VNKvOrTEJnLL5/W4b5J82auvoRkDPWIoY9VzIxUKbYpEv+IenMt/bQNpgu33iIs2TJp/wWIeghpYf27NwQLFFLaaepLmzizWVeJtUQ5ZDTcmMSSsDjnDfzBs/z7QkpJf/7IgqDf26T+YStLUerhZ/8Dc0awGN76rz5irse5CX72RueQWeiVriog/AcT8lLV9XwT2ENAq6BUEdfVI7iWyRyGijUf1cw52WsFrO91TmaEIJjOCDjgkZ1jvOauAoI/J786QJ2oQE9Szj++dr7ucaKyY36qIG9/pjAqfkcY5D0YafR3jebiFggwmRi2ug8XPpj+iSuTnu8rO0KCiWE6lQPtFdjSC+8ixFP/kE3EdV5cvJjtHaFFR5SYUiaAGdDtW4gZfa/CGacKqPfAdkME874rM/k3OQgklceSwD0N/bOYbjz9p1+hmkux1AsU7KERPbq98PkHXrV29K+m/uqImI9ngfTBkn8+bm3lx71yX8Aa9ZrETbOxOWOQQic7lzPVQL+rR8ArGwS9n3eqLO"
+    }
+  }
+}
