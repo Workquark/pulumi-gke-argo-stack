@@ -1,6 +1,6 @@
 import * as k8s from "@pulumi/kubernetes";
 import * as pulumi from "@pulumi/pulumi";
-import { clusterProvider, cluster } from "./gke"
+import { clusterProvider, cluster } from "../../gke/gke"
 
 
 const argocd_namespace_name = "argocd";

@@ -21,6 +21,22 @@ export const cluster = new gcp.container.Cluster(name, {
       "https://www.googleapis.com/auth/monitoring"
     ],
   },
+  ipAllocationPolicy: {
+    clusterIpv4CidrBlock: "10.0.0.0/16",
+    servicesIpv4CidrBlock: "10.1.0.0/16",
+  },
+  masterAuthorizedNetworksConfig: {
+    cidrBlocks: [{
+      cidrBlock: "10.147.20.0/24", // Zerotier subnet ip.
+      displayName: "Zerotier-Network"
+    }]
+  },
+  privateClusterConfig: {
+    masterIpv4CidrBlock: "172.16.0.0/28",
+    enablePrivateEndpoint: true,
+    enablePrivateNodes: true
+  },
+  enableIntranodeVisibility: true
 });
 
 // Export the Cluster name

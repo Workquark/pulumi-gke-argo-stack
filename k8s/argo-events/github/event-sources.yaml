@@ -10,8 +10,11 @@ spec:
         targetPort: 13000
   github:
     github-app:
-      owner: Workquark
-      repository: argocd-dotnet-kafka-subscriber-deploy
+      repositories:
+        - owner: Workquark
+          names:
+            - argocd-dotnet-kafka-subscriber-deploy
+            # - argo-workflows
       webhook:
         endpoint: /argocd-kafka-subscriber
         port: "13000"

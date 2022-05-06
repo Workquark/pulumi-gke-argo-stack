@@ -14,10 +14,10 @@
 
     kubectl apply -n argo-events -f https://raw.githubusercontent.com/argoproj/argo-events/stable/examples/eventbus/native.yaml
 
-## Create secret pat token
+## Create github secret pat token
 
     # This secret is for accessing the github repo ( TODO: migrate it to sealed secret )
-    kubectl create secret generic github-access --from-literal=token=<github PAT token> 
+    kubectl create secret generic github-access --from-literal=token=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 --dry-run=client --output json -n argo-events | kubeseal | tee github-secret.yaml
 
 ## Install bitnami sealed secrets controller and kubeseal which can create sealed secrets
 
