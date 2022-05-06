@@ -9,8 +9,12 @@ metadata:
   # nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   ingressClassName: nginx
+  tls:
+    - secretName: joydeep.tk
+    - secretName: www.joydeep.tk
   rules:
-    - http:
+    - host: joydeep.tk
+      http:
         paths:
           - path: /
             pathType: ImplementationSpecific
@@ -19,4 +23,12 @@ spec:
                 name: argocd-server
                 port:
                   number: 80
-      host: joydeep.tk
+    - host: www.joydeep.tk
+      http:
+        paths:
+          - pathType: ImplementationSpecific
+            backend:
+              service:
+                name: argocd-server
+                port:
+                  name: 80
