@@ -8,7 +8,7 @@ metadata:
 spec:
   project: dev
   source:
-    path: tree/main/deploy/static/provider/cloud
+    path: deploy/static/provider/cloud
     repoURL: https://github.com/kubernetes/ingress-nginx.git
     targetRevision: HEAD
   destination:
