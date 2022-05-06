@@ -2,5 +2,5 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - github.com/kubernetes/ingress-nginx/blob/main/deploy/static/provider/cloud/1.23
+  - github.com/kubernetes/ingress-nginx/tree/main/deploy/static/provider/cloud
 namespace: ingress-nginx
